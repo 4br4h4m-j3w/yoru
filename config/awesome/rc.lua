@@ -15,6 +15,16 @@ local beautiful = require("beautiful")
 local theme_dir = gears.filesystem.get_configuration_dir() .. "theme/"
 beautiful.init(theme_dir .. "theme.lua")
 
+local bling = require("modules.bling")
+local wallpaper_dir = gears.filesystem.get_configuration_dir() .. "theme/wallpapers/"
+
+bling.module.wallpaper.setup {
+    wallpaper = {wallpaper_dir},
+    change_timer = 60
+}
+
+
+
 --- ░█▀▀░█▀█░█▀█░█▀▀░▀█▀░█▀▀░█░█░█▀▄░█▀█░▀█▀░▀█▀░█▀█░█▀█░█▀▀
 --- ░█░░░█░█░█░█░█▀▀░░█░░█░█░█░█░█▀▄░█▀█░░█░░░█░░█░█░█░█░▀▀█
 --- ░▀▀▀░▀▀▀░▀░▀░▀░░░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀░▀░░▀░░▀▀▀░▀▀▀░▀░▀░▀▀▀
