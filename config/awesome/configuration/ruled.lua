@@ -83,7 +83,7 @@ ruled.client.connect_signal("request::rules", function()
 				"dialog",
 			},
 			class = {
-				--- "discord",
+				---"nmtui",
 			},
 			role = {
 				"GtkFileChooserDialog",

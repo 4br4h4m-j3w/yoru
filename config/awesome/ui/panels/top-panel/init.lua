@@ -9,6 +9,7 @@ local widgets = require("ui.widgets")
 local wbutton = require("ui.widgets.button")
 local animation = require("modules.animation")
 
+
 --- Modern Top Panel
 --- ~~~~~~~~~~~~~~~~~~~
 
@@ -17,7 +18,6 @@ return function(s)
 	--- ~~~~~~~~~~
 	s.clock = require("ui.panels.top-panel.clock")(s)
 	s.battery = require("ui.panels.top-panel.battery")()
-	s.network = require("ui.panels.top-panel.network")()
 
 	--- Animated tag list
 	--- ~~~~~~~~~~~~~~~~~
@@ -124,9 +124,6 @@ return function(s)
 				margins = { left = dpi(10), right = dpi(10) },
 				widget = wibox.container.margin,
 			},
-			on_release = function()
-				awesome.emit_signal("central_panel::toggle", s)
-			end,
 		})
 
 		return wibox.widget({
@@ -145,7 +142,7 @@ return function(s)
 		local widget = wibox.widget({
 			widget = wibox.container.constraint,
 			strategy = "max",
-			width = dpi(0),
+			width = dpi(400),
 			{
 				widget = wibox.container.margin,
 				margins = dpi(10),
@@ -153,33 +150,8 @@ return function(s)
 			},
 		})
 
-		local system_tray_animation = animation:new({
-			easing = animation.easing.linear,
-			duration = 0.125,
-			update = function(self, pos)
-				widget.width = pos
-			end,
-		})
-
-		local arrow = wbutton.text.state({
-			text_normal_bg = beautiful.accent,
-			normal_bg = beautiful.wibar_bg,
-			font = beautiful.icon_font .. "Round ",
-			size = 18,
-			text = "",
-			on_turn_on = function(self)
-				system_tray_animation:set(400)
-				self:set_text("")
-			end,
-			on_turn_off = function(self)
-				system_tray_animation:set(0)
-				self:set_text("")
-			end,
-		})
-
 		return wibox.widget({
 			layout = wibox.layout.fixed.horizontal,
-			arrow,
 			widget,
 		})
 	end
@@ -206,38 +178,12 @@ return function(s)
 		return widget
 	end
 
-	--- Layoutbox
-	--- ~~~~~~~~~
-	local function layoutbox()
-		local layoutbox_buttons = gears.table.join(
-			--- Left click
-			awful.button({}, 1, function(c)
-				awful.layout.inc(1)
-			end),
-
-			--- Right click
-			awful.button({}, 3, function(c)
-				awful.layout.inc(-1)
-			end),
-
-			--- Scrolling
-			awful.button({}, 4, function()
-				awful.layout.inc(-1)
-			end),
-			awful.button({}, 5, function()
-				awful.layout.inc(1)
-			end)
-		)
-
-		s.mylayoutbox = awful.widget.layoutbox()
-		s.mylayoutbox:buttons(layoutbox_buttons)
-
-		local widget = wbutton.elevated.state({
-			child = s.mylayoutbox,
-			normal_bg = beautiful.wibar_bg,
+	local function keyboard_layout_widget()
+		local widget = wibox.widget({
+			widget = awful.widget.keyboardlayout
 		})
 
-		return widget
+		return widget		
 	end
 
 	--- Create the top_panel
@@ -262,9 +208,8 @@ return function(s)
 					{
 						system_tray(),
 						s.battery,
-						s.network,
+						keyboard_layout_widget(),
 						notif_panel(),
-						layoutbox(),
 						layout = wibox.layout.fixed.horizontal,
 					},
 				},

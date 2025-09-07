@@ -44,7 +44,7 @@ _FONT_='AestheticIosevka-Nerd-Font-Complete'
 # =============================================
 
 function check() {
-    if [[ $? -eq 1 && ${PIPESTATUS[0]} -eq 1 ]]; then
+    if [[ $? -eq 1 && ${pipestatus[0]} -eq 1 ]]; then
         _end_job_=$(date +%s)
         summary $_start_job_ $_end_job_ 'failed' && notify-send -u critical -t 3000 -a "Screenshot Tool" "Screensht!" "screenshot aborted" >> $_LOG_FILE_ 2>&1
         exit 1

@@ -6,11 +6,11 @@ return {
 	--- Default Applications
 	default = {
 		--- Default terminal emulator
-		terminal = "wezterm start --always-new-process",
+		terminal = "alacritty",
 		--- Default music client
-		music_player = "wezterm start --class music ncmpcpp",
+		music_player = "alacritty -e ncmpcpp",
 		--- Default text editor
-		text_editor = "wezterm start nvim",
+		text_editor = "micro",
 		--- Default code editor
 		code_editor = "code",
 		--- Default web browser
@@ -18,13 +18,16 @@ return {
 		--- Default file manager
 		file_manager = "nautilus",
 		--- Default network manager
-		network_manager = "wezterm start nmtui",
+		--network_manager = "alacritty -e nmtui",
+		network_manager = "alacritty -e nmtui",
 		--- Default bluetooth manager
 		bluetooth_manager = "blueman-manager",
 		--- Default power manager
 		power_manager = "xfce4-power-manager",
 		--- Default rofi global menu
 		app_launcher = "rofi -no-lazy-grab -show drun -modi drun -theme " .. config_dir .. "configuration/rofi.rasi",
+		--- Telegram App
+		telegram = "Telegram",
 	},
 
 	--- List of binaries/shell scripts that will execute for a certain task

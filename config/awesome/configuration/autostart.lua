@@ -18,7 +18,13 @@ local function autostart_apps()
 	)
 	--- Other stuff
 	helpers.run.run_once_grep("blueman-applet")
+	helpers.run.run_once_pgrep("AmneziaVPN")
+	helpers.run.run_once_grep("redshift-gtk")
+	helpers.run.run_once_grep("udiskie -ant")
 	helpers.run.run_once_grep("nm-applet")
+
+	--- Layout Switching
+	awful.spawn.with_shell("setxkbmap -layout us,ru -option grp:alt_shift_toggle")
 end
 
 autostart_apps()

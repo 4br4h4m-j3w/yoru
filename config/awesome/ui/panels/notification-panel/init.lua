@@ -37,20 +37,6 @@ return function(s)
 					},
 					layout = wibox.layout.fixed.vertical,
 				},
-				{ ----------- MIDDLE GROUP -----------
-					{
-						{
-							require("ui.panels.notification-panel.github-activity"),
-							margins = dpi(20),
-							widget = wibox.container.margin,
-						},
-						helpers.ui.vertical_pad(dpi(30)),
-						layout = wibox.layout.fixed.vertical,
-					},
-					shape = helpers.ui.prrect(beautiful.border_radius * 2, true, false, false, false),
-					bg = beautiful.widget_bg,
-					widget = wibox.container.background,
-				},
 				layout = wibox.layout.flex.vertical,
 			},
 			shape = helpers.ui.prrect(beautiful.border_radius * 2, true, false, false, false),

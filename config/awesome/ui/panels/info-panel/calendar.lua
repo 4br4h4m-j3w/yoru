@@ -58,19 +58,20 @@ function calendar:set_date(date)
 
 	local current_date = os.date("*t")
 
-	self.days:add(day_name_widget("Su"))
 	self.days:add(day_name_widget("Mo"))
 	self.days:add(day_name_widget("Tu"))
 	self.days:add(day_name_widget("We"))
 	self.days:add(day_name_widget("Th"))
 	self.days:add(day_name_widget("Fr"))
 	self.days:add(day_name_widget("Sa"))
+	self.days:add(day_name_widget("Su"))
 
-	local first_day = os.date("*t", os.time({ year = date.year, month = date.month, day = 1 }))
+	local first_day = os.date("*t", os.time({ year = date.year, month = date.month, day = 0 }))
 	local last_day = os.date("*t", os.time({ year = date.year, month = date.month + 1, day = 0 }))
 	local month_days = last_day.day
 
 	local time = os.time({ year = date.year, month = date.month, day = 1 })
+
 	self.month:set_text(os.date("%B %Y", time))
 
 	local days_to_add_at_month_start = first_day.wday - 1

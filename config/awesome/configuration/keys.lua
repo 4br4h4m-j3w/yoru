@@ -34,7 +34,7 @@ awful.keyboard.append_global_keybindings({
 	end, { description = "open app launcher", group = "app" }),
 
 	--- Code editor
-	awful.key({ mod, shift }, "e", function()
+	awful.key({ mod, shift }, "c", function()
 		awful.spawn(apps.default.code_editor)
 	end, { description = "open code editor", group = "app" }),
 
@@ -44,8 +44,13 @@ awful.keyboard.append_global_keybindings({
 	end, { description = "open file manager", group = "app" }),
 
 	--- Web browser
-	awful.key({ mod, shift }, "w", function()
+	awful.key({ mod, shift }, "b", function()
 		awful.spawn(apps.default.web_browser)
+	end, { description = "open web browser", group = "app" }),
+
+	--- Telegram
+	awful.key({ mod, shift }, "t", function()
+		awful.spawn(apps.default.telegram)
 	end, { description = "open web browser", group = "app" }),
 
 	--- WM
@@ -62,22 +67,6 @@ awful.keyboard.append_global_keybindings({
 	--- Client
 	--- ~~~~~~
 	--- Focus client by direction
-	awful.key({ mod }, "k", function()
-		awful.client.focus.bydirection("up")
-		bling.module.flash_focus.flashfocus(client.focus)
-	end, { description = "focus up", group = "client" }),
-	awful.key({ mod }, "j", function()
-		awful.client.focus.bydirection("down")
-		bling.module.flash_focus.flashfocus(client.focus)
-	end, { description = "focus down", group = "client" }),
-	awful.key({ mod }, "h", function()
-		awful.client.focus.bydirection("left")
-		bling.module.flash_focus.flashfocus(client.focus)
-	end, { description = "focus left", group = "client" }),
-	awful.key({ mod }, "l", function()
-		awful.client.focus.bydirection("right")
-		bling.module.flash_focus.flashfocus(client.focus)
-	end, { description = "focus right", group = "client" }),
 
 	awful.key({ mod }, "Up", function()
 		awful.client.focus.bydirection("up")
@@ -95,50 +84,6 @@ awful.keyboard.append_global_keybindings({
 		awful.client.focus.bydirection("right")
 		bling.module.flash_focus.flashfocus(client.focus)
 	end, { description = "focus right", group = "client" }),
-
-	--- Resize focused client
-	awful.key({ mod, ctrl }, "k", function(c)
-		helpers.client.resize_client(client.focus, "up")
-	end, { description = "resize to the up", group = "client" }),
-	awful.key({ mod, ctrl }, "j", function(c)
-		helpers.client.resize_client(client.focus, "down")
-	end, { description = "resize to the down", group = "client" }),
-	awful.key({ mod, ctrl }, "h", function(c)
-		helpers.client.resize_client(client.focus, "left")
-	end, { description = "resize to the left", group = "client" }),
-	awful.key({ mod, ctrl }, "l", function(c)
-		helpers.client.resize_client(client.focus, "right")
-	end, { description = "resize to the right", group = "client" }),
-
-	awful.key({ mod, ctrl }, "Up", function(c)
-		helpers.client.resize_client(client.focus, "up")
-	end, { description = "resize to the up", group = "client" }),
-	awful.key({ mod, ctrl }, "Down", function(c)
-		helpers.client.resize_client(client.focus, "down")
-	end, { description = "resize to the down", group = "client" }),
-	awful.key({ mod, ctrl }, "Left", function(c)
-		helpers.client.resize_client(client.focus, "left")
-	end, { description = "resize to the left", group = "client" }),
-	awful.key({ mod, ctrl }, "Right", function(c)
-		helpers.client.resize_client(client.focus, "right")
-	end, { description = "resize to the right", group = "client" }),
-
-	--- Bling
-	--- ~~~~~
-	--- Add client to tabbed layout
-	awful.key({ alt }, "a", function()
-		bling.module.tabbed.pick_with_dmenu()
-	end, { description = "pick client to add to tab group", group = "tabs" }),
-
-	--- Remove client from tabbed layout
-	awful.key({ alt }, "d", function()
-		bling.module.tabbed.pop()
-	end, { description = "remove focused client from tabbing group", group = "tabs" }),
-
-	--- Cycle through client in tabbed layout
-	awful.key({ alt }, "s", function()
-		bling.module.tabbed.iter()
-	end, { description = "iterate through tabbing group", group = "tabs" }),
 
 	--- Hotkeys
 	--- ~~~~~~~
@@ -200,7 +145,7 @@ awful.keyboard.append_global_keybindings({
 	end, { description = "take a area screenshot", group = "hotkeys" }),
 
 	--- Lockscreen
-	awful.key({ mod, alt }, "l", function()
+	awful.key({ ctrl, alt }, "l", function()
 		lock_screen_show()
 	end, { description = "lock screen", group = "hotkeys" }),
 
@@ -215,18 +160,6 @@ awful.keyboard.append_global_keybindings({
 client.connect_signal("request::default_keybindings", function()
 	awful.keyboard.append_client_keybindings({
 		-- Move or swap by direction
-		awful.key({ mod, shift }, "k", function(c)
-			helpers.client.move_client(c, "up")
-		end),
-		awful.key({ mod, shift }, "j", function(c)
-			helpers.client.move_client(c, "down")
-		end),
-		awful.key({ mod, shift }, "h", function(c)
-			helpers.client.move_client(c, "left")
-		end),
-		awful.key({ mod, shift }, "l", function(c)
-			helpers.client.move_client(c, "right")
-		end),
 
 		awful.key({ mod, shift }, "Up", function(c)
 			helpers.client.move_client(c, "up")
@@ -239,23 +172,6 @@ client.connect_signal("request::default_keybindings", function()
 		end),
 		awful.key({ mod, shift }, "Right", function(c)
 			helpers.client.move_client(c, "right")
-		end),
-
-		--- Relative move client
-		awful.key({ mod, shift, ctrl }, "j", function(c)
-			c:relative_move(0, dpi(20), 0, 0)
-		end),
-
-		awful.key({ mod, shift, ctrl }, "k", function(c)
-			c:relative_move(0, dpi(-20), 0, 0)
-		end),
-
-		awful.key({ mod, shift, ctrl }, "h", function(c)
-			c:relative_move(dpi(-20), 0, 0, 0)
-		end),
-
-		awful.key({ mod, shift, ctrl }, "l", function(c)
-			c:relative_move(dpi(20), 0, 0, 0)
 		end),
 
 		--- Toggle titlebars (for focused client only)
@@ -292,40 +208,10 @@ client.connect_signal("request::default_keybindings", function()
 			c:raise()
 		end, { description = "(un)maximize horizontally", group = "client" }),
 
-		--- Minimize windows
-		awful.key({ mod }, "n", function(c)
-			-- The client currently has the input focus, so it cannot be
-			-- minimized, since minimized clients can't have the focus.
-			c.minimized = true
-		end, { description = "minimize", group = "client" }),
-
-		--- Un-minimize windows
-		awful.key({ mod, ctrl }, "n", function()
-			local c = awful.client.restore()
-			-- Focus restored client
-			if c then
-				c:activate({ raise = true, context = "key.unminimize" })
-			end
-		end, { description = "restore minimized", group = "client" }),
-
-		--- Keep on top
-		awful.key({ mod }, "p", function(c)
-			c.ontop = not c.ontop
-		end),
-
-		--- Sticky
-		awful.key({ mod, shift }, "p", function(c)
-			c.sticky = not c.sticky
-		end),
 
 		--- Close window
-		awful.key({ mod }, "q", function()
-			client.focus:kill()
-		end),
-
-		--- Center window
 		awful.key({ mod }, "c", function()
-			awful.placement.centered(c, { honor_workarea = true, honor_padding = true })
+			client.focus:kill()
 		end),
 
 		--- Window switcher
@@ -347,28 +233,6 @@ awful.keyboard.append_global_keybindings({
 	awful.key({ mod, shift }, "s", function()
 		awful.layout.set(awful.layout.suit.floating)
 	end, { description = "set floating layout", group = "layout" }),
-
-	--- Layout machi
-	awful.key({ mod }, ".", function()
-		machi.default_editor.start_interactive()
-	end, { description = "edit the current layout if it is a machi layout", group = "layout" }),
-	awful.key({ mod }, "/", function()
-		machi.switcher.start(client.focus)
-	end, { description = "switch between windows for a machi layout", group = "layout" }),
-
-	--- Number of columns
-	awful.key({ mod, alt }, "k", function()
-		awful.tag.incncol(1, nil, true)
-	end, { description = "increase the number of columns", group = "layout" }),
-	awful.key({ mod, alt }, "j", function()
-		awful.tag.incncol(-1, nil, true)
-	end, { description = "decrease the number of columns", group = "layout" }),
-	awful.key({ mod, alt }, "Up", function()
-		awful.tag.incncol(1, nil, true)
-	end, { description = "increase the number of columns", group = "layout" }),
-	awful.key({ mod, alt }, "Down", function()
-		awful.tag.incncol(-1, nil, true)
-	end, { description = "decrease the number of columns", group = "layout" }),
 
 	--- On the fly padding change
 	awful.key({ mod, shift }, "=", function()
@@ -404,7 +268,7 @@ awful.keyboard.append_global_keybindings({
 			if tag then
 				tag:view_only()
 			end
-		end,
+		end,			
 	}),
 	awful.key({
 		modifiers = { mod, ctrl },

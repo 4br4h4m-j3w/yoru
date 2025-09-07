@@ -10,10 +10,10 @@ return function(s)
 	local accent_color = beautiful.white
 	local clock = wibox.widget({
 		widget = wibox.widget.textclock,
-		format = "%a %b %e %l:%M %p",
+		format = "%A,  %d %B - %H:%M",
 		align = "center",
 		valign = "center",
-		font = beautiful.font_name .. "Medium 12",
+		font = beautiful.font_name .. "Medium 11",
 	})
 
 	clock.markup = helpers.ui.colorize_text(clock.text, accent_color)
